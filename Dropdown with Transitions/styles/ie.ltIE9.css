@@ -1,0 +1,24 @@
+/* ie.ltIE9.css */
+
+/* I can hasLayout? */
+#nav .shadow, #nav .padding{
+	zoom: 1;
+}
+
+#nav .shadow{
+	display: block !important;
+	position: absolute;
+	z-index: 79;
+	background-color: #333;
+	width: 100%;
+	height: 100%;
+	
+	margin-left: -2px;
+	padding-top: 8px;
+	margin-top: -8px;
+	
+	/* Shadow Offset */
+	top: 0px;
+	left: 0px;
+	filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=4, makeShadow=false, shadowOpacity=0.5);
+}

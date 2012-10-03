@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Dropdown Menu</title>
+<link rel="stylesheet" type="text/css" href="styles/preformat.css" media="all" />
+<style type="text/css">
+body{
+	font: 75% Arial, Helvetica, sans-serif;
+}
+
+#outerjacket{
+	width: 1024px;
+	margin: 1em auto 0px;
+}
+
+#nav{
+	background: url("img/n_top_bg.png") repeat-x top left;
+	height: 37px;
+}
+
+#nav, #nav li{
+	display: block;
+	list-style: none;
+	position: relative;
+	z-index: 82;
+}
+	#nav > li{
+		float: left;
+		z-index: 82;
+	}
+		#nav > li:hover{
+			background: url("img/n_top_over.png") repeat-x top left;
+		}
+		
+		#nav a{
+			display: block;
+			line-height: 37px;
+			padding: 0px 0.5em;
+			z-index: 82;
+			position: relative;
+			color: #749888;
+		}
+			#nav a:hover{
+				color: #fff;
+			}
+		
+		/* Subnav Menu */
+		#nav ul{
+			display: none;
+			position: absolute;
+			z-index: 80;
+			background: url("img/n_sub_bg.png") repeat-x left top #353535;
+			border: 1px solid #000;
+			
+			left: 0px;
+			top: 37px;
+			min-width: 100%;
+			
+			-o-box-shadow:		2px 2px 3px #000;
+			-icab-box-shadow:	2px 2px 3px #000;
+			-khtml-box-shadow:	2px 2px 3px #000;
+			-moz-box-shadow:	2px 2px 3px #000;
+			-webkit-box-shadow:	2px 2px 3px #000;
+			box-shadow:			2px 2px 3px #000;
+		}
+			#nav ul li{
+				display: block;
+				line-height: 27px !important;
+			}
+				#nav ul li:hover{
+					background: url("img/n_sub_over.png") repeat-x top left;
+				}
+				
+				#nav ul a{
+					display: block;
+					line-height: 27px !important;
+					white-space: nowrap;
+				}
+				
+				#nav > li:hover ul{
+					display: block !important;
+				}
+					/* Hide third-level of subnavigation */
+					#nav > li:hover ul ul{
+						display: none !important;
+					}
+				
+				#nav .padding{
+					display: block;
+					position: absolute;
+					z-index: 78;
+					
+					width: 100%;
+					height: 100%;
+					
+					top: 0px;
+					left: 0px;
+					background: none !important;
+				}
+					/* Padding amount for first-level dropdown */
+					#nav > li > ul > .padding{
+						width: 160%;
+						left: -30%;
+						height: 140%;
+					}
+				
+				#nav .buffer{
+					display: block;
+					position: absolute;
+					bottom: 0px;
+					right: 100%;
+					
+					width: 100%;
+					height: 100%;
+					background: none !important;
+				}
+				
+				#nav .shadow{
+					display: none !important;
+				}
+		
+		/*	Third-level Subnavigation
+		-	I predict this is where it's going to get tough.
+		*/
+			#nav ul ul{
+				position: absolute;
+				left: 100%;
+				top: -1px;
+				display: none;
+			}
+				#nav ul ul .padding{
+					width: 150%;
+					top: -35%;
+					height: 170%;
+				}
+				/*	Show subnavigation */
+				#nav > li:hover ul li:hover > ul{
+					display: block !important;
+					z-index: 70 !important;
+				}
+		
+		
+		
+		/*	Running Border on Subnavigation
+		-	Stable implementation requires an additional span tag at the end of each anchor tag.
+		*/
+		#nav ul a{
+			position: relative;
+		}
+			#nav ul a span{
+				background-color: #5a5a5a;
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				height: 1px;
+				width: 100%;
+			}
+		
+		/*	Outlining Rules for Debugging */
+		.padding	{	outline-color: red;		}
+		.buffer		{	outline-color: blue;	}
+		
+		.showbounds .padding,
+		.showbounds .buffer{
+			outline-style: solid;
+			outline-width: 1px;
+		}
+</style>
+
+<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="styles/ie.ltIE9.css" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="styles/ie.lteIE7.css" /><![endif]-->
+
+<style type="text/css">
+/* The following CSS is pure bullshit used purely for the purpose of additional, unrelated demonstration. */
+#controls{
+	margin-top: 3em;
+	float: right;
+	margin-right: 5em;
+}
+	#controls fieldset{
+		background-color: #ff6;
+		border: 1px dashed #a00;
+	}
+	#controls input,
+	#controls label{
+		cursor: pointer;
+	}
+	#controls label{
+		font-weight: bold;
+		display: block;
+		padding: 0.5em 1em;
+	}
+	.hidden{
+		display: none;
+	}
+</style>
+<script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var toggle	=	$("#toggle-class");
+		if(toggle.hasClass("hidden"))
+			return;
+		showBounds(toggle[0].checked);
+		
+		function showBounds(value){
+			return ((typeof(value) == "boolean") ? value : value[0].checked) ?
+				$("body").addClass("showbounds")	:
+				$("body").removeClass("showbounds");
+		}
+		
+		toggle.change(function(e){
+			showBounds(this.checked);
+		});
+		
+		$(window).keydown(function(e){
+			if(e.keyCode == 83){ // "S"
+				toggle[0].checked	=	!(toggle[0].checked);
+				showBounds(toggle);
+			}
+		});
+	});
+</script>
+</head>
+
+<body class="showbounds">
+<img src="img/bookmark.jpg" alt="Pure CSS? FAP VIGOROUSLY." class="hidden" />
+<div id="outerjacket">
+
+<!--
+qui blanditiis excepturi sint occaecati cupiditate non provident. Id quod maxime placeat facere possimus, et harum quidem rerum facilis est nisi ut aliquid ex ea commodi consequatur? Quo voluptas nulla pariatur? Atque corrupti quos dolores et quas molestias dicta sunt explicabo. Consectetur, adipisci velit, eaque ipsa quae ab illo inventore veritatis nisi ut aliquid ex ea commodi consequatur? Omnis voluptas assumenda est, et harum quidem rerum facilis est temporibus autem quibusdam. Dicta sunt explicabo.
+Excepturi sint occaecati cupiditate non provident, qui ratione voluptatem sequi nesciunt. Consequatur aut perferendis doloribus asperiores repellat. Nemo enim ipsam voluptatem qui dolorem ipsum quia dolor sit amet, velit esse quam nihil molestiae consequatur. Magnam aliquam quaerat voluptatem. Et quasi architecto beatae vitae aut odit aut fugit, neque porro quisquam est.
+-->
+	<ul id="nav">
+		<li>
+			<a href="#">Voluptate Atque</a>
+			<ul>
+				<li><a href="#">Quo voluptas nulla pariatur?<span></span></a></li>
+				<li><a href="#">Dignissimos Ducimus<span></span></a></li>
+				<li><a href="#">Qui blanditiis<span></span></a></li>
+				<li class="padding"></li>
+				<li class="shadow"></li>
+			</ul>
+		</li>
+		
+		<li>
+			<a href="#">Corrupti Quos Dolores</a>
+			<ul>
+				<li><a href="#">Qui Dolorem<span></span></a></li>
+				<li><a href="#">Ipsum Quia<span></span></a></li>
+				<li><a href="#">Dolor Sit<span></span></a></li>
+				<li><a href="#">Tempore<span></span></a></li>
+				<li><a href="#">Qui Ratione<span></span></a></li>
+				<li>
+					<a href="#">Amet, nam libero! &nbsp;&nbsp;&nbsp;&raquo;<span></span></a>
+					<ul>
+						<li><a href="#">Qui Dolorem<span></span></a></li>
+						<li><a href="#">Ipsum Quia<span></span></a></li>
+						<li><a href="#">Dolor Sit<span></span></a></li>
+						<li><a href="#">Qui Dolorem<span></span></a></li>
+						<li><a href="#">Ipsum Quia<span></span></a></li>
+						<li><a href="#">Dolor Sit<span></span></a></li>
+						<li><a href="#">Qui Dolorem<span></span></a></li>
+						<li><a href="#">Ipsum Quia<span></span></a></li>
+						<li><a href="#">Dolor Sit<span></span></a></li>
+						<li>
+							<a href="#">Amet, nam libero! Libero, libero, LIBERO!! &nbsp;&nbsp;&nbsp;&raquo;<span></span></a>
+							<ul>
+								<li><a href="#">Dude, what the fuck is "Libero"?<span></span></a></li>
+								<li><a href="#">Ipsum Quia<span></span></a></li>
+								<li><a href="#">Dolor Sit<span></span></a></li>
+								<li><a href="#">Qui Dolorem<span></span></a></li>
+								<li><a href="#">Ipsum Quia<span></span></a></li>
+								<li><a href="#">Dolor Sit<span></span></a></li>
+								
+								<li class="padding"></li>
+								<li class="shadow"></li>
+								<li class="buffer"></li>
+							</ul>
+						</li>
+						<li><a href="#">Tempore<span></span></a></li>
+						<li><a href="#">Qui Ratione<span></span></a></li>
+						
+						<li class="padding"></li>
+						<li class="shadow"></li>
+						<li class="buffer"></li>
+					</ul>
+				</li>
+
+				<li class="padding"></li>
+				<li class="shadow"></li>
+			</ul>
+		</li>
+		
+		<li>
+			<a href="#">Et Quas Molestias<span></span></a>
+			<ul>
+				<li><a href="#">Voluptatem sequi nesciunt<span></span></a></li>
+				<li><a href="#">Dicta sunt explicabo.<span></span></a></li>
+				<li><a href="#">Sed Quia Non<span></span></a></li>
+				<li><a href="#">Numquam Eius<span></span></a></li>
+				<li><a href="#">Modi cum soluta<span></span></a></li>
+				<li><a href="#">Nobis est<span></span></a></li>
+				
+				<li class="padding"></li>
+				<li class="shadow"></li>
+			</ul>
+		</li>
+		
+		<li>
+			<a href="#">Iste natus error sit voluptatem.</a>
+			<ul>
+				<li><a href="#">Eligendi Optio<span></span></a></li>
+				<li><a href="#">Atque Corrupti<span></span></a></li>
+				<li><a href="#">Quos Dolores<span></span></a></li>
+				<li><a href="#">Quas Molestias.<span></span></a></li>
+				<li><a href="#">Libero Tempore<span></span></a></li>
+				<li><a href="#">Dignissimos Ducimus<span></span></a></li>
+				
+				<li class="padding"></li>
+				<li class="shadow"></li>
+			</ul>
+		</li>
+	</ul>
+
+
+	<div id="controls">
+		<form action="./" method="get" id="controls-form">
+			<fieldset>
+				<label for="toggle-class">Show Boundaries (S): <input type="checkbox" id="toggle-class" name="toggle-class" value="true" /></label>
+			</fieldset>
+		</form>
+	</div>
+
+</div>
+
+</body>
+</html>

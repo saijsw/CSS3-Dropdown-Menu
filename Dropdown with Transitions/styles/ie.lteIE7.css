@@ -1,0 +1,21 @@
+/* ie.lteIE7.css */
+
+a:link,
+a:visited{
+	color: #000;
+}
+
+/* Trick IE7 into holding subnav open on mouseout. */
+#nav .padding,
+#nav .buffer{
+	background: url("../img/spacer.gif") !important;
+}
+
+/* Remove drop shadows; IE chokes on its own filtery goodness. */
+#nav .shadow{
+	display: none !important;
+}
+
+/* Since IE7 doesn't support the outline property, we'll use translucent PNG backgrounds instead. */
+.showbounds	#nav	.padding	{	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA9JREFUeNpi+M/A4AAQYAAEQQFAI1XugQAAAABJRU5ErkJggg==") !important;	}
+.showbounds	#nav	.buffer		{	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA9JREFUeNpiYGD47wAQYAACQwFAqXHSQgAAAABJRU5ErkJggg==") !important;	}

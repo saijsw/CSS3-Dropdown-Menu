@@ -1,0 +1,21 @@
+#controls{
+	margin-top: 3em;
+	float: right;
+	margin-right: 5em;
+}
+	#controls fieldset{
+		background-color: #ff6;
+		border: 1px dashed #a00;
+	}
+	#controls input,
+	#controls label{
+		cursor: pointer;
+	}
+	#controls label{
+		font-weight: bold;
+		display: block;
+		padding: 0.5em 1em;
+	}
+	.hidden{
+		display: none;
+	}
